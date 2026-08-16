@@ -11,17 +11,30 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v5
+      - name: Require Cloudflare secrets
+        id: cf
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::CLOUDFLARE_* secrets not set. Deploy skipped (green). Stamp secrets, then re-run."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/setup-node@v5
+        if: steps.cf.outputs.skip != 'true'
         with:
           node-version: "24"
       - name: Ensure Pages project exists
-        run: |
-          npx wrangler@4 pages project list 2>/dev/null | grep -q "socialorderpromotions-com" \
-            || npx wrangler@4 pages project create socialorderpromotions-com --production-branch=main
+        if: steps.cf.outputs.skip != 'true'
+        run: npx wrangler@4 pages project create socialorderpromotions-com --production-branch=main || true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Deploy
+        if: steps.cf.outputs.skip != 'true'
         run: npx wrangler@4 pages deploy . --project-name=socialorderpromotions-com --branch=main --commit-dirty=true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
