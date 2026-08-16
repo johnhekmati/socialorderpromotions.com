@@ -6,9 +6,12 @@ Hekmati Brands · Community OS · first clients = the household.
 This face is **Kristi’s** — not John’s side project, not W-2 corporate.
 Positioning: Manage. Create. Grow. Be Seen.
 
-SOP runs the inside work that stands two houses up — Form & Frame Design
-(fastest revenue) and The Cognition Factory (most mature product) — under
-the Hekmati Brands marks. Not the cash engine. Not the flagship.
+**Thesis (John):** Form & Frame Design (fastest revenue) and The Cognition Factory
+(mature product) get traction first. That later densifies internal ops brands
+— including Social Order Promotions — into real LOBs with paying external logos.
+
+Today SOP is house / internal promotions under the Hekmati Brands marks.
+Not a book of outside clients. No fake logos. Not the cash engine. Not the flagship.
 Mark: `assets/sop-logo-landscape.jpg`.
 
 | | |
